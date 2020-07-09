@@ -5,8 +5,8 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item mx-2 active"><a class="nav-link text-uppercase" href="{{ url('/')}}">Home </a></li>
-              <li class="nav-item mx-2"><a class="nav-link text-uppercase" href="about.html">About</a></li>
-              <li class="nav-item mx-2"><a class="nav-link text-uppercase" href="contact.html">Contact</a></li>
+              <li class="nav-item mx-2"><a class="nav-link text-uppercase" href="about.html">ASK</a></li>
+              {{-- <li class="nav-item mx-2"><a class="nav-link text-uppercase" href="contact.html">Contact</a></li> --}}
               <li class="nav-item ml-2 dropdown"><a class="nav-link text-uppercase dropdown-toggle pr-0" id="navbarDropdownMenuLink" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">USER</a>
                 <div class="dropdown-menu mt-lg-4" aria-labelledby="navbarDropdownMenuLink">
                   {{-- <a class="dropdown-item font-weight-bold text-small" href="index.html">Home</a>
