@@ -8,20 +8,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
     <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="{{asset('public/qna/vendor/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/qna/vendor/bootstrap/css/bootstrap.min.css')}}">
     <!-- Google fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700&amp;display=swap">
     <!-- Modal Video-->
-    <link rel="stylesheet" href="{{asset('public/qna/vendor/modal-video/css/modal-video.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/qna/vendor/modal-video/css/modal-video.min.css')}}">
     <!-- Leaflet-->
-    <link rel="stylesheet" href="{{asset('public/qna/vendor/leaflet/leaflet.css')}}">
+    <link rel="stylesheet" href="{{asset('/qna/vendor/leaflet/leaflet.css')}}">
     <!-- Owl Carousel-->
-    <link rel="stylesheet" href="{{asset('public/qna/vendor/owl.carousel2/assets/owl.carousel.min.css')}}">
-    <link rel="stylesheet" href="{{asset('public/qna/vendor/owl.carousel2/assets/owl.theme.default.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/qna/vendor/owl.carousel2/assets/owl.carousel.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/qna/vendor/owl.carousel2/assets/owl.theme.default.min.css')}}">
     <!-- theme stylesheet-->
-    <link rel="stylesheet" href="{{asset('public/qna/css/style.default.css')}}" id="theme-stylesheet">
+    <link rel="stylesheet" href="{{asset('/qna/css/style.default.css')}}" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="{{asset('public/qna/css/custom.css')}}">
+    <link rel="stylesheet" href="{{asset('/qna/css/custom.css')}}">
     <!-- Favicon-->
     <link rel="shortcut icon" href="img/favicon.png">
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>
@@ -35,12 +35,12 @@
     @yield('content')
     @include('layouts._footer')
     <!-- JavaScript files-->
-    <script src="{{asset('public/qna/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('public/qna/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{asset('public/qna/vendor/owl.carousel2/owl.carousel.min.js')}}"></script>
-    <script src="{{asset('public/qna/vendor/modal-video/js/modal-video.js')}}"></script>
-    <script src="{{asset('public/qna/vendor/leaflet/leaflet.js')}}"></script>
-    <script src="{{asset('public/qna/js/front.js')}}"></script>
+    <script src="{{asset('/qna/vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('/qna/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('/qna/vendor/owl.carousel2/owl.carousel.min.js')}}"></script>
+    <script src="{{asset('/qna/vendor/modal-video/js/modal-video.js')}}"></script>
+    <script src="{{asset('/qna/vendor/leaflet/leaflet.js')}}"></script>
+    <script src="{{asset('/qna/js/front.js')}}"></script>
     <script>
       // ------------------------------------------------------- //
       //   Inject SVG Sprite - 
