@@ -34,7 +34,7 @@
     @include('layouts._header')
     <!-- Services Section -->
     <section class="py-5">
-      <div class="container container-fluid py-5 text-center">
+      <div class="container container-fluid py-5">
         <header class="mb-5">
     @yield('content')
         </header>

@@ -1,1 +1,21 @@
 /* your styles go here */
+a.tag {
+    background-color: rgb(225, 236, 244);
+    padding: .4em .5em;
+}
+
+a.tagI {
+    background-color: rgb(225, 236, 244);
+    padding: auto;
+}
+
+a { color: inherit; } 
+
+div.ansT {
+    text-align:left;
+}
+
+div.AnsQ {
+    padding-top: 4rem!important;
+    border-top: 1px solid #;
+}

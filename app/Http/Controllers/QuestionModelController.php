@@ -16,9 +16,12 @@ class QuestionModelController extends Controller
     public function index()
     {
         $questions  = QuestionModel::paginate(8);
-
+        // $questions->tag = explode(',' , $questions->tag);
+        foreach ($questions as $key => $value)
+        {
+            $questions[$key]['tag'] = explode(',', $value['tag']);
+        }
         return view('question.index', compact('questions'));
-        // return $categories;
 
     }
 
@@ -58,9 +61,12 @@ class QuestionModelController extends Controller
      * @param  \App\QuestionModel  $questionModel
      * @return \Illuminate\Http\Response
      */
-    public function show(QuestionModel $questionModel)
+    public function show($id)
     {
-        //
+        $question  = QuestionModel::findOrFail($id);
+        $question->tag = explode(',' , $question->tag);
+
+        return view('question.show', compact('question'));
     }
 
     /**
