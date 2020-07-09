@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('layouts.sample');
+    return redirect()->route('question.index');
 });
 
 Auth::routes();

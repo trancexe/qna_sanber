@@ -17,6 +17,7 @@ class CreateQuestionsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('body');
+            $table->string('tag');
             $table->timestamps();
         });
 

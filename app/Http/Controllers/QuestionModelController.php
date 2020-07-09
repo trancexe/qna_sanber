@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\QuestionModel;
 use Illuminate\Http\Request;
+use Auth;
 
 class QuestionModelController extends Controller
 {
@@ -14,7 +15,11 @@ class QuestionModelController extends Controller
      */
     public function index()
     {
-        
+        $questions  = QuestionModel::paginate(8);
+
+        return view('question.index', compact('questions'));
+        // return $categories;
+
     }
 
     /**
@@ -35,7 +40,16 @@ class QuestionModelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        unset($request['_token']);
+        $data = [
+            'title' => $request->get('title'),
+            'body' => $request->get('textarea'),
+            'tag' => $request->get('tag'),
+            'user_id' => Auth::id()
+        ];
+        QuestionModel::create($data);
+        return url('/');;
+        // {"title":"satu dua tiga","textarea":"<p><strong>satu dua tiga<\/strong><\/p>","tag":"satu, dua, tiga, empat"}
     }
 
     /**

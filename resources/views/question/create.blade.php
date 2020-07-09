@@ -3,16 +3,26 @@
 
 @section('content')
 <form action="{{route('question.store')}}" method="POST">
-    <div class="form-group">
-      <label for="textarea">INPUT</label>
+  @csrf
+  <div class="form-group">
+    <label for="">Title</label>
+    <input type="text" name="title" id="title" class="form-control" placeholder="" aria-describedby="helpId">
+  </div>  
+  <div class="form-group">
       <textarea class="form-control" name="textarea" id="textarea" rows="3"></textarea>
     </div>
+    <div class="form-group">
+      <label for=""></label>
+      <input type="text" name="tag" id="tag" class="form-control" placeholder="tag separated by comma. ex: one, two, tree " aria-describedby="helpId">
+    </div>
+    <a href="{{ url('/')}}" class="btn btn-sm btn-primary">Back</a>
+    <button type="submit" class="btn btn-sm btn-success">Submit</button>
 </form>
 @endsection
 
 
 @push('script')
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdn.tiny.cloud/1/l7rzbfk0iqkj9pwjc3spihhkp0uniclzootgf6wkbuloilj2/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
     tinymce.init({
       selector: '#textarea'
