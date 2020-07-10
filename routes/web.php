@@ -20,5 +20,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::resource('question', 'QuestionModelController');
+Route::get('question/create', 'QuestionModelController@create')->name('question.create');
+Route::resource('question', 'QuestionModelController', ['except' => 'create']);
+Route::resource('answer', 'AnswerController', ['except' => 'index']);

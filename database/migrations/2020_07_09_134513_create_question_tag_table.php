@@ -13,11 +13,15 @@ class CreateQuestionTagTable extends Migration
      */
     public function up()
     {
-        Schema::create('question_tag', function (Blueprint $table) {
+        Schema::create('tag', function (Blueprint $table) {
             $table->id();
-            $table->integer('question_id');
             $table->integer('tag_id');
             $table->timestamps();
+        });
+
+        Schema::table('tag', function (Blueprint $table) {
+            $table->bigInteger('question_id')->unsigned()->nullable();;
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
         });
     }
 
@@ -28,6 +32,6 @@ class CreateQuestionTagTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('question_tag');
+        Schema::dropIfExists('tag');
     }
 }

@@ -51,8 +51,7 @@ class QuestionModelController extends Controller
             'user_id' => Auth::id()
         ];
         QuestionModel::create($data);
-        return url('/');;
-        // {"title":"satu dua tiga","textarea":"<p><strong>satu dua tiga<\/strong><\/p>","tag":"satu, dua, tiga, empat"}
+        return redirect()->route('question.index');
     }
 
     /**
@@ -65,8 +64,8 @@ class QuestionModelController extends Controller
     {
         $question  = QuestionModel::findOrFail($id);
         $question->tag = explode(',' , $question->tag);
-
-        return view('question.show', compact('question'));
+        $answer = $question->answer;
+        return view('question.show', compact('question','answer'));
     }
 
     /**
@@ -75,9 +74,10 @@ class QuestionModelController extends Controller
      * @param  \App\QuestionModel  $questionModel
      * @return \Illuminate\Http\Response
      */
-    public function edit(QuestionModel $questionModel)
+    public function edit($id)
     {
-        //
+        $question = QuestionModel::findOrFail($id);
+        return view('question.edit', compact('question'));
     }
 
     /**
@@ -87,9 +87,14 @@ class QuestionModelController extends Controller
      * @param  \App\QuestionModel  $questionModel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, QuestionModel $questionModel)
+    public function update(Request $request,$id)
     {
-        //
+        $question = \App\QuestionModel::findOrFail($id);
+        $question->title = $request->get('title');
+        $question->body = $request->get('textarea');
+        $question->tag = $request->get('tag');
+        $question->save();
+        return redirect()->route('question.show',$id);
     }
 
     /**
@@ -98,8 +103,10 @@ class QuestionModelController extends Controller
      * @param  \App\QuestionModel  $questionModel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(QuestionModel $questionModel)
+    public function destroy($id)
     {
-        //
+        // $deleted = QuestionModel::findOrFail($id);
+        $deleted = QuestionModel::destroy($id);
+        return redirect()->route('question.index');
     }
 }

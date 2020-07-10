@@ -4,6 +4,11 @@ a.tag {
     padding: .4em .5em;
 }
 
+a.aCom{
+    padding: 0 1px;
+    color: #dfd6d6;
+}
+
 a.tagI {
     background-color: rgb(225, 236, 244);
     padding: auto;
@@ -16,6 +21,6 @@ div.ansT {
 }
 
 div.AnsQ {
-    padding-top: 4rem!important;
-    border-top: 1px solid #;
+    padding-top: 1px;
+    border-top: 1px solid;
 }

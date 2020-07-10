@@ -15,9 +15,9 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('body');
-            $table->string('tag');
+            $table->longText('title');
+            $table->longText('body');
+            $table->string('tag')->nullable();
             $table->timestamps();
         });
 

@@ -9,4 +9,7 @@ class QuestionModel extends Model
     protected $table = 'questions';
     protected $fillable = ['title','body','tag','user_id'];
     
+    public function answer(){
+        return $this->hasMany('App\Answer','question_id','id');
+    }
 }
