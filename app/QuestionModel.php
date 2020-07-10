@@ -12,4 +12,8 @@ class QuestionModel extends Model
     public function answer(){
         return $this->hasMany('App\Answer','question_id','id');
     }
+
+    public function comment(){
+        return $this->hasMany('App\Comment','question_id','id');
+    }
 }

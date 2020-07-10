@@ -19,7 +19,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('comm/create/{q_id}/{a_id}', [
+    'as' => 'comm.create',
+    'uses' => 'CommentController@create'
+]);
+
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('question/create', 'QuestionModelController@create')->name('question.create');
 Route::resource('question', 'QuestionModelController', ['except' => 'create']);
 Route::resource('answer', 'AnswerController', ['except' => 'index']);
+Route::resource('comm', 'CommentController', ['except' => ['index','create']]);

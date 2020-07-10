@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\QuestionModel;
+use App\Comment;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -65,7 +66,8 @@ class QuestionModelController extends Controller
         $question  = QuestionModel::findOrFail($id);
         $question->tag = explode(',' , $question->tag);
         $answer = $question->answer;
-        return view('question.show', compact('question','answer'));
+        $comment = $question->comment;
+        return view('question.show', compact('question','answer','comment'));
     }
 
     /**

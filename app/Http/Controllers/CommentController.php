@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use Illuminate\Http\Request;
+use Auth;
 
 class CommentController extends Controller
 {
@@ -22,9 +23,9 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($q_id,$a_id)
     {
-        //
+        return view('comment.create', compact('q_id', 'a_id'));
     }
 
     /**
@@ -35,7 +36,25 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(request()->get('a_id')==0){
+            $data =[
+                'body' => $request->get('body'),
+                'question_id' => $request->get('q_id'),
+                'answer_id' => null,
+                'user_id' => Auth::id()
+            ];
+        }
+        else{
+            $data =[
+                'body' => $request->get('body'),
+                'question_id' => $request->get('q_id'),
+                'answer_id' => $request->get('a_id'),
+                'user_id' => Auth::id()
+            ];
+        }
+        // dd($data);
+        Comment::create($data);
+        return redirect()->route('question.show',$request->get('q_id'));
     }
 
     /**
