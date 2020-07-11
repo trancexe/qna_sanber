@@ -74,9 +74,11 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Comment $comment)
-    {
-        //
+    public function edit($id)
+    {   
+        $data = Comment::findOrFail($id);
+        // dd($data);
+        return view('comment.edit', compact('data'));
     }
 
     /**
@@ -88,7 +90,11 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        //
+        $data = Comment::findOrFail($request->id);
+        $data->body = $request->get('textarea');
+        $data->save();
+
+        return redirect()->route('question.show',$data->question_id);
     }
 
     /**
@@ -97,8 +103,10 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy($id)
     {
-        //
+        $deleted = Comment::destroy($id);
+        // return dd($id);
+        return redirect()->back();
     }
 }

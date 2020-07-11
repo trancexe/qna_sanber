@@ -5,49 +5,61 @@
 <div class="header">
   <h4> {{$question->title}}</h4>
 </div>
-<div class="body">
+<div class="body" style="word-break: break-all;">
   <p>{!! $question->body !!}</p>
 </div>
 {{-- Question END --}}
 
- {{-- button Quesion--}}
- <div class="row float-right">
-    <form
-    method="POST"
-    class="d-inline"
-    onsubmit="return confirm('Are you sure?')"
-    action="{{route('question.destroy',$question->id)}}"
-    >@csrf
-    <input
-    type="hidden"
-    value="DELETE"
-    name="_method">
-    <button type="sumbit" class="btn float-right shadow-none" value="Trash">
-        <i class="fas fa-trash"></i>
-      </a>
-    </button>
-  </form>
+{{-- button Quesion--}}
+<div class="row float-right">
   <p class='float-right'>
-    <button type="sumbit" class="btn float-right shadow-none" value="edit">
-      <a class="" href="{{ route('question.edit',$question->id)}}">
-        <i class="fas fa-edit"></i>
-      </a>
-    </button>
-  </p>
-  <p class='float-right'>
-    <button type="sumbit" class="btn float-right shadow-none" value="edit">
+    <button type="sumbit" class="btn float-right shadow-none" value="edit"
+    data-toggle="tooltip" data-placement="top" title="Vote Up">
       <a class="" href="{{ route('question.edit',$question->id)}}">
         <i class="fas fa-caret-up"></i>
       </a>
     </button>
   </p>
+  <p class='float-right mb-0'>
+    <button type="sumbit" class="btn disabled" value="down"
+    data-toggle="tooltip" data-placement="top" title="Score">
+      <a class="" >
+        10
+      </a>
+    </button>
+  </p>
   <p class='float-right'>
-    <button type="sumbit" class="btn float-right shadow-none" value="edit">
+    <button type="sumbit" class="btn float-right shadow-none" value="edit"
+    data-toggle="tooltip" data-placement="top" title="Vote Down">
       <a class="" href="{{ route('question.edit',$question->id)}}">
         <i class="fas fa-caret-down"></i>
       </a>
     </button>
-  </p>
+  </p>  
+  <form
+  method="POST"
+  class="d-inline"
+  onsubmit="return confirm('Are you sure?')"
+  action="{{route('question.destroy',$question->id)}}"
+  >@csrf
+  <input
+  type="hidden"
+  value="DELETE"
+  name="_method">
+  <button type="sumbit" class="btn float-right shadow-none" value="Trash"
+  data-toggle="tooltip" data-placement="top" title="Delete">
+    <i class="fas fa-trash"></i>
+  </a>
+</button>
+</form>
+<p class='float-right'>
+  <button type="sumbit" class="btn float-right shadow-none" value="edit"
+  data-toggle="tooltip" data-placement="top" title="Edit">
+    <a class="" href="{{ route('question.edit',$question->id)}}">
+      <i class="fas fa-edit"></i>
+    </a>
+  </button>
+</p>
 </div>
 {{-- button question end--}}
 
@@ -59,26 +71,49 @@
 </div>
 {{-- tag end --}}
 
-{{-- Question Comment --}}
+{{--  Comment Question --}}
 <div class="mt-4">
-  <div class="row col-12">
-    <div class="col-2"></div>
-    <div class="col-10"><p>
-      <hr width="80%" size="8" align="left">
-      @foreach ($comment as $key)
-      @if ($key->question_id == $question->id && $key->answer_id == null)
+<hr width="80%" size="8" align="left">
+  @foreach ($comment as $key)
+      <div class="row col-12">
+        @if ($key->question_id == $question->id && $key->answer_id == null)
+        <div class="col-2"></div>
+        <div class="col-10" style="word-break: break-all;"><p >
       {!!$key->body!!}
+      {{-- comment button --}}
+        <form
+        method="POST"
+        class="d-inline"
+        onsubmit="return confirm('Are you sure?')"
+        action="{{route('comm.destroy',$key->id)}}"
+        >@csrf
+        <input
+        type="hidden"
+        value="DELETE"
+        name="_method">
+        <button type="sumbit" class="btn float-right shadow-none" value="Trash"
+        data-toggle="tooltip" data-placement="top" title="Delete">
+          <i class="fas fa-trash"></i>
+        </a>
+      </button>
+      </form>
+      <p class='float-right'>
+        <button type="sumbit" class="btn float-right shadow-none" value="edit" data-toggle="tooltip" data-placement="top" title="Edit">
+          <a class="" href="{{ route('comm.edit',$key->id)}}">
+            <i class="fas fa-edit"></i>
+          </a>
+        </button>
+      </p>
+      {{-- comment button end --}}
       <hr width="80%" size="8" align="left">
-      @endif
-      @endforeach  
-    </p></div>
+    </p>
   </div>
+      @endif
+  </div>
+  @endforeach  
 </div>
-{{-- Question Comment END --}}
-
-<div class="row col-12">
+{{-- Comment Question END --}}
   <a class='aCom' href="{{route ('comm.create', ['q_id'=>$question->id, 'a_id'=> 0])}}">add a comment</a>
-</div>
 
 
 {{-- Answer --}}
@@ -88,68 +123,108 @@
 </div>
 <hr width="80%" size="8" align="left">
 @foreach($answer as $key)
-<div class="row col-12">
-<div style="word-break: break-all">{!!$key->body!!}
-</div>
+<div class="row col-12" style="word-break: break-all;">
+  <div style="word-break: break-all">{!!$key->body!!}
+  </div>
 </div>
 
 {{-- Button Answer --}}
 <div class="row col-12">
   <div class="col-12">
-  <form
-  method="POST"
-  class="d-inline"
-  onsubmit="return confirm('Are you sure?')"
-  action="{{route('answer.destroy',$key->id)}}"
-  >@csrf
-  <input
-  type="hidden"
-  value="DELETE"
-  name="_method">
-  <button type="sumbit" class="btn float-right shadow-none" value="Trash">
-    <i class="fas fa-trash"></i>
-  </a>
-</button>
+    <form
+    method="POST"
+    class="d-inline"
+    onsubmit="return confirm('Are you sure?')"
+    action="{{route('answer.destroy',$key->id)}}"
+    >@csrf
+    <input
+    type="hidden"
+    value="DELETE"
+    name="_method">
+    <button type="sumbit" class="btn float-right shadow-none pb-0" value="Trash"
+    data-toggle="tooltip" data-placement="top" title="Delete">
+      <i class="fas fa-trash"></i>
+    </a>
+  </button>
 </form>
-<p class='float-right'>
-<button type="sumbit" class="btn float-right shadow-none" value="edit">
-<a class="" href="{{route('answer.edit', $key->id)}}">
-  <i class="fas fa-edit"></i>
-</a>
-</button>
+<p class='float-right mb-0'>
+  <button type="sumbit" class="btn float-right shadow-none pb-0" value="edit"
+  data-toggle="tooltip" data-placement="top" title="Edit">
+    <a class="" href="{{route('answer.edit', $key->id)}}">
+      <i class="fas fa-edit"></i>
+    </a>
+  </button>
 </p>
-<p class='float-right'>
-<button type="sumbit" class="btn float-right shadow-none" value="edit">
-  <a class="" href="{{ route('question.edit',$question->id)}}">
-    <i class="fas fa-caret-up"></i>
-  </a>
-</button>
+<p class='float-right mb-0'>
+  <button type="sumbit" class="btn float-right shadow-none pb-0" value="up"
+  data-toggle="tooltip" data-placement="top" title="Vote Up">
+    <a class="" href="{{ route('question.edit',$question->id)}}">
+      <i class="fas fa-caret-up"></i>
+    </a>
+  </button>
 </p>
-<p class='float-right'>
-<button type="sumbit" class="btn float-right shadow-none" value="edit">
-  <a class="" href="{{ route('question.edit',$question->id)}}">
-    <i class="fas fa-caret-down"></i>
-  </a>
-</button>
+<p class='float-right mb-0'>
+  <button type="sumbit" class="btn disabled" value="down"
+  data-toggle="tooltip" data-placement="top" title="Score">
+    <a class="" >
+      10
+    </a>
+  </button>
+</p>
+<p class='float-right mb-0'>
+  <button type="sumbit" class="btn float-right shadow-none pb-0" value="down"
+  data-toggle="tooltip" data-placement="top" title="Vote Down">
+    <a class="" href="{{ route('question.edit',$question->id)}}">
+      <i class="fas fa-caret-down"></i>
+    </a>
+  </button>
 </p>
 </div>
 </div>
 {{-- Button Answer End --}}
 
 {{-- coomment answer --}}
+<hr width="80%" size="8" align="left" class="mt-0">
+      <div class="mt-4">
+          @foreach ($comment as $keycom)
+              <div class="row col-12">
+                @if ($keycom->question_id == $question->id && $keycom->answer_id ==  $key->id)
+                <div class="col-2"></div>
+                <div class="col-10" style="word-break: break-all;"><p >
+              {!!$keycom->body!!}
+              {{-- comment button --}}
+                <form
+                method="POST"
+                class="d-inline"
+                onsubmit="return confirm('Are you sure?')"
+                action="{{route('comm.destroy',$keycom->id)}}"
+                >@csrf
+                <input
+                type="hidden"
+                value="DELETE"
+                name="_method">
+                <button type="sumbit" class="btn float-right shadow-none" value="Trash"
+                data-toggle="tooltip" data-placement="top" title="Delete">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </button>
+              </form>
+              <p class='float-right'>
+                <button type="sumbit" class="btn float-right shadow-none" value="edit" data-toggle="tooltip" data-placement="top" title="Edit">
+                  <a class="" href="{{ route('comm.edit',$keycom->id)}}">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                </button>
+              </p>
+              {{-- comment button end --}}
+              <hr width="80%" size="8" align="left">
+            </p>
+          </div>
+              @endif
+          </div>
+          @endforeach  
+        </div>
 
-  <div class="row col-12">
-    <div class="col-2"></div>
-    <div class="col-10"><p>
-      @foreach ($comment as $keycom)
-      @if ($keycom->question_id == $question->id && $keycom->answer_id == $key->id)
-      {!!$keycom->body!!}
-      <hr width="80%" size="8" align="left">
-      @endif
-      @endforeach 
-    </p>
-  </div>
-</div>
 {{-- coomment answer end--}}
 
 <a class='aCom' href="{{route ('comm.create', ['q_id'=>$question->id, 'a_id'=> $key->id])}}">add a comment</a>
@@ -180,6 +255,10 @@
   tinymce.init({
     selector: '#textarea'
   });
+
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
 </script>
 
 @endpush
