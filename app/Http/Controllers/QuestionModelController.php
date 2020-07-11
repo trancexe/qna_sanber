@@ -6,6 +6,7 @@ use App\QuestionModel;
 use App\Comment;
 use Illuminate\Http\Request;
 use Auth;
+use App\Vote;
 
 class QuestionModelController extends Controller
 {
@@ -67,7 +68,11 @@ class QuestionModelController extends Controller
         $question->tag = explode(',' , $question->tag);
         $answer = $question->answer;
         $comment = $question->comment;
-        return view('question.show', compact('question','answer','comment'));
+        $sumQuestion = Vote::sumQuestion($question);
+        $sumAnswer = Vote::sumAnswer($question);
+        $score = Vote::userRepQ();
+        // return view('question.show', compact('question','answer','comment','sumQuestion','sumAnswer'));
+        return dd($score);
     }
 
     /**

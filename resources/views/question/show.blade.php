@@ -12,24 +12,30 @@
 
 {{-- button Quesion--}}
 <div class="row float-right">
+  <form method="post" action="{{ route('votes',$question->id) }}">
+  @method("PUT")
+  @csrf
+  <input type="hidden" name="vote" value=10>
+  <input type="hidden" name="answer_id" value={{null}}>
   <p class='float-right'>
-    <button type="sumbit" class="btn float-right shadow-none" value="edit"
+    <button type="submit" class="btn float-right shadow-none"
     data-toggle="tooltip" data-placement="top" title="Vote Up">
-      <a class="" href="{{ route('question.edit',$question->id)}}">
+      <a class="">
         <i class="fas fa-caret-up"></i>
       </a>
     </button>
   </p>
+  </form>
   <p class='float-right mb-0'>
-    <button type="sumbit" class="btn disabled" value="down"
+    <button type="submit" class="btn disabled" value="down"
     data-toggle="tooltip" data-placement="top" title="Score">
       <a class="" >
-        10
+        {{$sumQuestion[0]->vote}}
       </a>
     </button>
   </p>
   <p class='float-right'>
-    <button type="sumbit" class="btn float-right shadow-none" value="edit"
+    <button type="submit" class="btn float-right shadow-none" value=-1
     data-toggle="tooltip" data-placement="top" title="Vote Down">
       <a class="" href="{{ route('question.edit',$question->id)}}">
         <i class="fas fa-caret-down"></i>
@@ -46,14 +52,14 @@
   type="hidden"
   value="DELETE"
   name="_method">
-  <button type="sumbit" class="btn float-right shadow-none" value="Trash"
+  <button type="submit" class="btn float-right shadow-none" value="Trash"
   data-toggle="tooltip" data-placement="top" title="Delete">
     <i class="fas fa-trash"></i>
   </a>
 </button>
 </form>
 <p class='float-right'>
-  <button type="sumbit" class="btn float-right shadow-none" value="edit"
+  <button type="submit" class="btn float-right shadow-none" value="edit"
   data-toggle="tooltip" data-placement="top" title="Edit">
     <a class="" href="{{ route('question.edit',$question->id)}}">
       <i class="fas fa-edit"></i>
@@ -91,14 +97,14 @@
         type="hidden"
         value="DELETE"
         name="_method">
-        <button type="sumbit" class="btn float-right shadow-none" value="Trash"
+        <button type="submit" class="btn float-right shadow-none" value="Trash"
         data-toggle="tooltip" data-placement="top" title="Delete">
           <i class="fas fa-trash"></i>
         </a>
       </button>
       </form>
       <p class='float-right'>
-        <button type="sumbit" class="btn float-right shadow-none" value="edit" data-toggle="tooltip" data-placement="top" title="Edit">
+        <button type="submit" class="btn float-right shadow-none" value="edit" data-toggle="tooltip" data-placement="top" title="Edit">
           <a class="" href="{{ route('comm.edit',$key->id)}}">
             <i class="fas fa-edit"></i>
           </a>
@@ -141,44 +147,57 @@
     type="hidden"
     value="DELETE"
     name="_method">
-    <button type="sumbit" class="btn float-right shadow-none pb-0" value="Trash"
+    <button type="submit" class="btn float-right shadow-none pb-0" value="Trash"
     data-toggle="tooltip" data-placement="top" title="Delete">
       <i class="fas fa-trash"></i>
     </a>
   </button>
 </form>
 <p class='float-right mb-0'>
-  <button type="sumbit" class="btn float-right shadow-none pb-0" value="edit"
+  <button type="submit" class="btn float-right shadow-none pb-0" value="edit"
   data-toggle="tooltip" data-placement="top" title="Edit">
     <a class="" href="{{route('answer.edit', $key->id)}}">
       <i class="fas fa-edit"></i>
     </a>
   </button>
 </p>
+
 <p class='float-right mb-0'>
-  <button type="sumbit" class="btn float-right shadow-none pb-0" value="up"
-  data-toggle="tooltip" data-placement="top" title="Vote Up">
-    <a class="" href="{{ route('question.edit',$question->id)}}">
-      <i class="fas fa-caret-up"></i>
-    </a>
-  </button>
-</p>
-<p class='float-right mb-0'>
-  <button type="sumbit" class="btn disabled" value="down"
-  data-toggle="tooltip" data-placement="top" title="Score">
-    <a class="" >
-      10
-    </a>
-  </button>
-</p>
-<p class='float-right mb-0'>
-  <button type="sumbit" class="btn float-right shadow-none pb-0" value="down"
+  <button type="submit" class="btn float-right shadow-none pb-0" value=-1
   data-toggle="tooltip" data-placement="top" title="Vote Down">
     <a class="" href="{{ route('question.edit',$question->id)}}">
       <i class="fas fa-caret-down"></i>
     </a>
   </button>
 </p>
+
+<p class='float-right mb-0'>
+  <button type="submit" class="btn disabled" value="down"
+  data-toggle="tooltip" data-placement="top" title="Score">
+    <a class="" >
+      @foreach ($sumAnswer as $sa)
+        @if ($sa->answer_id == $key->id)
+        {{$sa->vote}}
+        @endif
+      @endforeach
+    </a>
+  </button>
+</p>
+
+<form method="post" action="{{ route('votes',$question->id) }}">
+  @method("PUT")
+  @csrf
+  <input type="hidden" name="vote" value=10>
+  <input type="hidden" name="answer_id" value={{$key->id}}>
+  <p class='float-right'>
+    <button type="submit" class="btn float-right shadow-none"
+    data-toggle="tooltip" data-placement="top" title="Vote Up">
+      <a class="">
+        <i class="fas fa-caret-up"></i>
+      </a>
+    </button>
+  </p>
+  </form>
 </div>
 </div>
 {{-- Button Answer End --}}
@@ -203,14 +222,14 @@
                 type="hidden"
                 value="DELETE"
                 name="_method">
-                <button type="sumbit" class="btn float-right shadow-none" value="Trash"
+                <button type="submit" class="btn float-right shadow-none" value="Trash"
                 data-toggle="tooltip" data-placement="top" title="Delete">
                   <i class="fas fa-trash"></i>
                 </a>
               </button>
               </form>
               <p class='float-right'>
-                <button type="sumbit" class="btn float-right shadow-none" value="edit" data-toggle="tooltip" data-placement="top" title="Edit">
+                <button type="submit" class="btn float-right shadow-none" value="edit" data-toggle="tooltip" data-placement="top" title="Edit">
                   <a class="" href="{{ route('comm.edit',$keycom->id)}}">
                     <i class="fas fa-edit"></i>
                   </a>
@@ -259,6 +278,7 @@
   $(function () {
     $('[data-toggle="tooltip"]').tooltip()
   })
+
 </script>
 
 @endpush

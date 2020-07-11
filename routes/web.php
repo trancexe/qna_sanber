@@ -17,6 +17,15 @@ Route::get('/', function () {
     return redirect()->route('question.index');
 });
 
+Route::group(['middleware' => 'auth'], function () {
+    Route::put('vote/{id}', 'VoteController@vote')->name('votes');
+    Route::post('answer', 'AnswerController@store')->name('answer.store');
+    //add more Routes here
+});
+
+
+
+
 Auth::routes();
 
 Route::get('comm/create/{q_id}/{a_id}', [
@@ -27,5 +36,5 @@ Route::get('comm/create/{q_id}/{a_id}', [
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('question/create', 'QuestionModelController@create')->name('question.create');
 Route::resource('question', 'QuestionModelController', ['except' => 'create']);
-Route::resource('answer', 'AnswerController', ['except' => 'index']);
+Route::resource('answer', 'AnswerController', ['except' => ['index','store']]);
 Route::resource('comm', 'CommentController', ['except' => ['index','create']]);
