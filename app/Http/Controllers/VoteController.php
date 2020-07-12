@@ -20,7 +20,7 @@ class VoteController extends Controller
         else if($request->answer_id == null){
             $data = Vote::where('question_id','=',$id)->
                     where('user_id','=',Auth::id())->
-                    where('answer_id','=','null')->
+                    where('answer_id','=',null)->
                     where('kd_rep','=','1')->
                     get();
         }

@@ -13,6 +13,7 @@ class Vote extends Model
         $db = DB::select('select question_id, sum(vote) as vote 
         from votes
         where question_id = '.$request->id.' and answer_id is null
+        
         group by question_id
         ');
         
