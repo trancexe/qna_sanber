@@ -13,19 +13,27 @@ class VoteController extends Controller
         if($request->answer_id){
             $data = Vote::where('question_id','=',$id)->
                     where('user_id','=',Auth::id())->
-                    where('answer_id','=',$request->answer_id)->get();
+                    where('answer_id','=',$request->answer_id)->
+                    where('kd_rep','=','1')->
+                    get();
         }
         else if($request->answer_id == null){
             $data = Vote::where('question_id','=',$id)->
-                    where('user_id','=',Auth::id())->get();
+                    where('user_id','=',Auth::id())->
+                    where('answer_id','=','null')->
+                    where('kd_rep','=','1')->
+                    get();
         }
+
+        
 
         if($data->isEmpty()){
             $save = [
                         'vote' => $request->get('vote'),
                         'question_id' => $id,
                         'answer_id' => $request->get('answer_id'),
-                        'user_id' => Auth::id()
+                        'user_id' => Auth::id(),
+                        'kd_rep' => 1
         
                     ];
             $save = Vote::create($save);    
@@ -33,8 +41,17 @@ class VoteController extends Controller
         }
         else {
             return redirect()->route('question.show',$id);
+            $save = [];
         }
 
-        // dd($data);
+        // dd($data->isEmpty());
+    }
+
+
+    public function banswer(Request $request,$id){
+        $banswer = Vote::bAnswer($request,$id);
+
+        return redirect()->route('question.show',$id);
+
     }
 }

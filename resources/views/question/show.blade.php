@@ -26,22 +26,47 @@
     </button>
   </p>
   </form>
+
+  
   <p class='float-right mb-0'>
     <button type="submit" class="btn disabled" value="down"
-    data-toggle="tooltip" data-placement="top" title="Score">
+    data-toggle="tooltip" data-placement="top" title="Score" disabled>
       <a class="" >
-        {{$sumQuestion[0]->vote}}
+        {{$sumQuestion['vote']}}
       </a>
     </button>
   </p>
+
+
+  @if($scoreById['score'] < 15)
   <p class='float-right'>
-    <button type="submit" class="btn float-right shadow-none" value=-1
-    data-toggle="tooltip" data-placement="top" title="Vote Down">
-      <a class="" href="{{ route('question.edit',$question->id)}}">
+    <button type="submit" class="btn float-right shadow-none disabled"
+    data-toggle="tooltip" data-placement="top" title="You need 15 reputation to vote down">
+      <a class="">
         <i class="fas fa-caret-down"></i>
       </a>
     </button>
-  </p>  
+  </p>
+  @else
+    <form method="post" action="{{ route('votes',$question->id) }}">
+      @method("PUT")
+      @csrf
+      <input type="hidden" name="vote" value=-1>
+      <input type="hidden" name="answer_id" value={{null}}>
+      <p class='float-right'>
+        <button type="submit" class="btn float-right shadow-none disabled"
+        data-toggle="tooltip" data-placement="top" title="Vote Down">
+          <a class="">
+            <i class="fas fa-caret-down"></i>
+          </a>
+        </button>
+      </p>
+      </form>
+  @endif 
+
+  @if($question->user_id <> Auth::id())
+
+  @else
   <form
   method="POST"
   class="d-inline"
@@ -66,6 +91,8 @@
     </a>
   </button>
 </p>
+@endif
+
 </div>
 {{-- button question end--}}
 
@@ -74,6 +101,10 @@
   @foreach ($question->tag as $key => $value)
   <a class="tag" rel="tag">{{$value}}</a>
   @endforeach
+  
+</div>
+<div class="mt-1">
+  Asked : {{$question->created_at}}    edited : {{$question->updated_at}}
 </div>
 {{-- tag end --}}
 
@@ -87,6 +118,8 @@
         <div class="col-10" style="word-break: break-all;"><p >
       {!!$key->body!!}
       {{-- comment button --}}
+      @if ($key->user_id <> Auth::id())
+      @else
         <form
         method="POST"
         class="d-inline"
@@ -110,6 +143,7 @@
           </a>
         </button>
       </p>
+      @endif
       {{-- comment button end --}}
       <hr width="80%" size="8" align="left">
     </p>
@@ -137,6 +171,8 @@
 {{-- Button Answer --}}
 <div class="row col-12">
   <div class="col-12">
+    @if($key->user_id <> Auth::id())
+    @else
     <form
     method="POST"
     class="d-inline"
@@ -161,19 +197,37 @@
     </a>
   </button>
 </p>
+@endif
 
-<p class='float-right mb-0'>
-  <button type="submit" class="btn float-right shadow-none pb-0" value=-1
-  data-toggle="tooltip" data-placement="top" title="Vote Down">
-    <a class="" href="{{ route('question.edit',$question->id)}}">
+@if($scoreById['score'] < 15)
+<p class='float-right'>
+  <button type="submit" class="btn float-right shadow-none disabled"
+  data-toggle="tooltip" data-placement="top" title="You need 15 reputation to vote down">
+    <a class="">
       <i class="fas fa-caret-down"></i>
     </a>
   </button>
 </p>
+@else
+  <form method="post" action="{{ route('votes',$question->id) }}">
+    @method("PUT")
+    @csrf
+    <input type="hidden" name="vote" value=-1>
+    <input type="hidden" name="answer_id" value={{$key->id}}>
+    <p class='float-right'>
+      <button type="submit" class="btn float-right shadow-none disabled"
+      data-toggle="tooltip" data-placement="top" title="Vote Down">
+        <a class="">
+          <i class="fas fa-caret-down"></i>
+        </a>
+      </button>
+    </p>
+    </form>
+@endif
 
 <p class='float-right mb-0'>
   <button type="submit" class="btn disabled" value="down"
-  data-toggle="tooltip" data-placement="top" title="Score">
+  data-toggle="tooltip" data-placement="top" title="Score" disabled>
     <a class="" >
       @foreach ($sumAnswer as $sa)
         @if ($sa->answer_id == $key->id)
@@ -190,7 +244,7 @@
   <input type="hidden" name="vote" value=10>
   <input type="hidden" name="answer_id" value={{$key->id}}>
   <p class='float-right'>
-    <button type="submit" class="btn float-right shadow-none"
+    <button type="submit" class="btn float-right shadow-none disabled"
     data-toggle="tooltip" data-placement="top" title="Vote Up">
       <a class="">
         <i class="fas fa-caret-up"></i>
@@ -198,6 +252,59 @@
     </button>
   </p>
   </form>
+
+  @if($question->user_id == Auth::id())
+    @if($baCheck['answer_id'])
+      @if($baCheck['answer_id'] == $key->id)
+      <p class='float-left'>
+        <button type="submit" class="btn float-right shadow-none disabled"
+        data-toggle="tooltip" data-placement="top" title="Choose as the best answer" disabled>
+          <a style="color: green">
+            <i class="fas fa-check fa-2x"></i>
+          </a>
+        </button>
+      </p>
+      @endif
+      @else
+      <form method="post" action="{{ route('banswer',$question->id) }}">
+        @method("PUT")
+        @csrf
+        <input type="hidden" name="vote" value=15>
+        <input type="hidden" name="answer_id" value={{$key->id}}>
+        <p class='float-left'>
+          <button type="submit" class="btn float-right shadow-none disabled"
+          data-toggle="tooltip" data-placement="top" title="Choose as the best answer">
+            <a class="">
+              <i class="fas fa-check"></i>
+            </a>
+          </button>
+        </p>
+        </form>
+    @endif
+  @endif
+  {{-- <form method="post" action="{{ route('banswer',$question->id) }}">
+    @method("PUT")
+    @csrf
+    <input type="hidden" name="vote" value=15>
+    <input type="hidden" name="answer_id" value={{$key->id}}>
+    <p class='float-left'>
+      <button type="submit" class="btn float-right shadow-none disabled"
+      data-toggle="tooltip" data-placement="top" title="Choose as the best answer">
+        <a class="">
+          <i class="fas fa-check"></i>
+        </a>
+      </button>
+    </p>
+    </form> --}}
+
+  {{-- <p class='float-left'>
+    <button type="submit" class="btn float-right shadow-none disabled"
+    data-toggle="tooltip" data-placement="top" title="Choose as the best answer">
+      <a style="color:green">
+        <i class="fas fa-check fa-2x"></i>
+      </a>
+    </button>
+  </p> --}}
 </div>
 </div>
 {{-- Button Answer End --}}
@@ -212,6 +319,8 @@
                 <div class="col-10" style="word-break: break-all;"><p >
               {!!$keycom->body!!}
               {{-- comment button --}}
+              @if($keycom->user_id <> Auth::id())
+              @else
                 <form
                 method="POST"
                 class="d-inline"
@@ -235,6 +344,7 @@
                   </a>
                 </button>
               </p>
+              @endif
               {{-- comment button end --}}
               <hr width="80%" size="8" align="left">
             </p>

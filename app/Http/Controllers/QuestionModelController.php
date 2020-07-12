@@ -70,9 +70,10 @@ class QuestionModelController extends Controller
         $comment = $question->comment;
         $sumQuestion = Vote::sumQuestion($question);
         $sumAnswer = Vote::sumAnswer($question);
-        $score = Vote::userRepQ();
-        // return view('question.show', compact('question','answer','comment','sumQuestion','sumAnswer'));
-        return dd($score);
+        $scoreById = Vote::scoreUserById(Auth::id());
+        $baCheck = Vote::baCheck($id);
+        return view('question.show', compact('question','answer','comment','sumQuestion','sumAnswer','scoreById','baCheck'));
+        // return dd($baCheck);
     }
 
     /**
